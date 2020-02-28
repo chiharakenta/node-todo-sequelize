@@ -45,10 +45,10 @@ app.get('/', (req, res) => {
 
 /* 新規作成 */
 app.post('/create', (req, res) => {
-  const filter = {
+  const param = {
     content: req.body.todoContent
   };
-  db.todos.create( filter ).then((results) => {
+  db.todos.create( param ).then((results) => {
     res.redirect('/');
   });
 })
