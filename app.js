@@ -87,6 +87,52 @@ app.delete('/delete/:id', (req, res) => {
   });
 });
 
+app.get('/categories', (req, res) => {
+  db.category.findAll({}).then((results) => {
+    res.render('categories/index.ejs', { categories: results } );
+  });
+});
+
+app.post('/categories', (req, res) => {
+  const params = {
+    name: req.body.categoryName
+  };
+  db.category.create(params).then((results) => {
+    res.redirect('/categories');
+  });
+});
+
+app.get('/categories/:id/edit', (req, res) => {
+  db.category.findByPk(req.params.id).then((results) => {
+    res.render('categories/edit.ejs', { category: results } );
+  });
+});
+
+app.put('/categories/:id', (req, res) => {
+  const params = {
+    name: req.body.categoryName
+  };
+  const filter = {
+    where: {
+      id: req.params.id
+    }
+  }
+  db.category.update(params, filter).then((results) => {
+    res.redirect('/categories')
+  });
+})
+
+app.delete('/categories/:id', (req, res) => {
+  const filter = {
+    where: {
+      id: req.params.id
+    }
+  };
+  db.category.destroy(filter).then((results) => {
+    res.redirect('/categories');
+  });
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
