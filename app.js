@@ -52,22 +52,11 @@ app.get('/', (req, res) => {
 
 /* 新規作成 */
 app.post('/create', (req, res) => {
-  const param = {
-    content: req.body.todoContent,
-    category: {
-      id: 3,
-      name: 'R-style'
-    }
+  const params = {
+    category_id: req.body.categoryId,
+    content: req.body.todoContent
   };
-  const options = {
-    include: [{
-      model: db.category,
-      as: 'category'
-    }]
-  }
-  console.log(param);
-  console.log(options);
-  db.todo.create(param, options).then((results) => {
+  db.todo.create(params, options).then((results) => {
     res.redirect('/');
   });
 })
@@ -81,7 +70,7 @@ app.get('/edit/:id', (req, res) => {
 
 /* 更新 */
 app.put('/update/:id', (req, res) => {
-  const param = {
+  const params = {
     content: req.body.todoContent
   };
   const filter = {
@@ -89,7 +78,7 @@ app.put('/update/:id', (req, res) => {
       id: req.params.id
     }
   };
-  db.todo.update(param, filter).then((results) => {
+  db.todo.update(params, filter).then((results) => {
     res.redirect('/');
   });
 });

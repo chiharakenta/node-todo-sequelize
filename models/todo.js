@@ -4,6 +4,10 @@ module.exports = (sequelize, DataTypes) => {
     content: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    category_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   }, {
     underscored: true,
