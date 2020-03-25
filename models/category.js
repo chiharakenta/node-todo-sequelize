@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     underscored: true,
   });
   category.associate = function(models) {
-    category.hasMany(models.todos);
+    category.hasMany(models.todo);
   };
   return category;
 };

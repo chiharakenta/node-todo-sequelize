@@ -38,7 +38,8 @@ const db = require('./models/index');
 
 /* 一覧表示 */
 app.get('/', (req, res) => {
-  db.todos.findAll({}).then((results) => {
+  db.todo.findAll({}).then((results) => {
+    console.log(results);
     res.render('index.ejs', {todos: results} );
   });
 })
@@ -46,16 +47,17 @@ app.get('/', (req, res) => {
 /* 新規作成 */
 app.post('/create', (req, res) => {
   const param = {
+    category_id: req.body.categoryId,
     content: req.body.todoContent
   };
-  db.todos.create( param ).then((results) => {
+  db.todo.create( param ).then((results) => {
     res.redirect('/');
   });
 })
 
 /* 編集 */
 app.get('/edit/:id', (req, res) => {
-  db.todos.findByPk(req.params.id).then((results) => {
+  db.todo.findByPk(req.params.id).then((results) => {
     res.render('edit.ejs', {todo: results} );
   });
 });
@@ -70,7 +72,7 @@ app.put('/update/:id', (req, res) => {
       id: req.params.id
     }
   };
-  db.todos.update(param, filter).then((results) => {
+  db.todo.update(param, filter).then((results) => {
     res.redirect('/');
   });
 });
@@ -82,13 +84,19 @@ app.delete('/delete/:id', (req, res) => {
       id: req.params.id
     }
   };
-  db.todos.destroy(filter).then((results) => {
+  db.todo.destroy(filter).then((results) => {
     res.redirect('/');
   });
 });
 
 app.get('/categories', (req, res) => {
-  db.category.findAll({}).then((results) => {
+  const options = {
+    include: [{
+      model: db.todo
+    }]
+  };
+  db.category.findAll(options).then((results) => {
+    console.log(results);
     res.render('categories/index.ejs', { categories: results } );
   });
 });

@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const todos = sequelize.define('todos', {
+  const todo = sequelize.define('todo', {
     content: {
       type: DataTypes.STRING,
       allowNull: false
@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     underscored: true,
   });
-  todos.associate = function(models) {
-    todos.belongsTo(models.category);
+  todo.associate = function(models) {
+    todo.belongsTo(models.category);
   };
-  return todos;
+  return todo;
 };
