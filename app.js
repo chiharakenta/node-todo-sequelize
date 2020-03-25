@@ -38,7 +38,13 @@ const db = require('./models/index');
 
 /* 一覧表示 */
 app.get('/', (req, res) => {
-  db.todo.findAll({}).then((results) => {
+  const options = {
+    include: [{
+      model: db.category,
+      as: 'category'
+    }]
+  };
+  db.todo.findAll(options).then((results) => {
     console.log(results);
     res.render('index.ejs', {todos: results} );
   });
@@ -47,10 +53,21 @@ app.get('/', (req, res) => {
 /* 新規作成 */
 app.post('/create', (req, res) => {
   const param = {
-    category_id: req.body.categoryId,
-    content: req.body.todoContent
+    content: req.body.todoContent,
+    category: {
+      id: 3,
+      name: 'R-style'
+    }
   };
-  db.todo.create( param ).then((results) => {
+  const options = {
+    include: [{
+      model: db.category,
+      as: 'category'
+    }]
+  }
+  console.log(param);
+  console.log(options);
+  db.todo.create(param, options).then((results) => {
     res.redirect('/');
   });
 })
