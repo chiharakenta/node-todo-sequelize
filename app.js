@@ -40,13 +40,11 @@ const db = require('./models/index');
 app.get('/', (req, res) => {
   const options = {
     include: [{
-      model: db.category,
-      as: 'category'
+      model: db.todo
     }]
   };
-  db.todo.findAll(options).then((results) => {
-    console.log(results);
-    res.render('index.ejs', {todos: results} );
+  db.category.findAll(options).then((results) => {
+    res.render('index.ejs', { categories: results } );
   });
 })
 
@@ -56,7 +54,7 @@ app.post('/create', (req, res) => {
     category_id: req.body.categoryId,
     content: req.body.todoContent
   };
-  db.todo.create(params, options).then((results) => {
+  db.todo.create(params).then((results) => {
     res.redirect('/');
   });
 })

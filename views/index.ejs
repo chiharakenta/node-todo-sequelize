@@ -10,19 +10,27 @@
   <form action="/create" method="post">
     <input type="text" name="todoContent">
     <select name="categoryId">
-      
+      <% categories.map((category) => { %>
+        <option value="<%= category.id %>"><%= category.name %></option>
+      <% }); %>
     </select>
     <input type="submit" value="作成">
   </form>
+  <a href="/categories">カテゴリー管理</a>
   <ul>
-    <% todos.map((todo) => { %>
-      <li><%= todo.id %> <%= todo.content %></li>
-      <a href="/edit/<%= todo.id %>">編集</a>
-      <form action="/delete/<%= todo.id %>" method="post">
-        <input type="hidden" name="_method" value="delete">
-        <input type="submit" value="削除">
-      </form>
-    <% }) %>
+    <% categories.map((category) => { %>
+      <li><%= category.name %></li>
+      <ul>
+        <% category.todos.map((todo) => { %>
+          <li><%= todo.id %> <%= todo.content %></li>
+          <a href="/edit/<%= todo.id %>">編集</a>
+          <form action="/delete/<%= todo.id %>" method="post">
+            <input type="hidden" name="_method" value="delete">
+            <input type="submit" value="削除">
+          </form>
+        <% }); %>
+      </ul>
+    <% }); %>
   </ul>
 </body>
 </html>
