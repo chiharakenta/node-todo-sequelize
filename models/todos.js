@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     underscored: true,
   });
   todos.associate = function(models) {
-    // associations can be defined here
+    todos.belongsTo(models.category);
   };
   return todos;
 };
