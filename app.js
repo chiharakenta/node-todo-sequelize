@@ -44,7 +44,7 @@ app.get('/', (req, res) => {
     }]
   };
   db.category.findAll(options).then((results) => {
-    res.render('index.ejs', { categories: results } );
+    res.render('index.ejs', { categories: results });
   });
 })
 
@@ -54,15 +54,19 @@ app.post('/create', (req, res) => {
     category_id: req.body.categoryId,
     content: req.body.todoContent
   };
-  db.todo.create(params).then((results) => {
-    res.redirect('/');
-  });
+  db.todo.create(params)
+    .then((results) => {
+      res.redirect('/');
+    })
+    .catch((error) => {
+      console.error(error.errors[0].message);
+    })
 })
 
 /* 編集 */
 app.get('/edit/:id', (req, res) => {
   db.todo.findByPk(req.params.id).then((results) => {
-    res.render('edit.ejs', {todo: results} );
+    res.render('edit.ejs', { todo: results });
   });
 });
 
@@ -101,7 +105,7 @@ app.get('/categories', (req, res) => {
   };
   db.category.findAll(options).then((results) => {
     console.log(results);
-    res.render('categories/index.ejs', { categories: results } );
+    res.render('categories/index.ejs', { categories: results });
   });
 });
 
@@ -116,7 +120,7 @@ app.post('/categories', (req, res) => {
 
 app.get('/categories/:id/edit', (req, res) => {
   db.category.findByPk(req.params.id).then((results) => {
-    res.render('categories/edit.ejs', { category: results } );
+    res.render('categories/edit.ejs', { category: results });
   });
 });
 
@@ -146,12 +150,12 @@ app.delete('/categories/:id', (req, res) => {
 });
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

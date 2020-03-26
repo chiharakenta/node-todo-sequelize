@@ -3,7 +3,12 @@ module.exports = (sequelize, DataTypes) => {
   const todo = sequelize.define('todo', {
     content: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'タスクを記入してください'
+        }
+      }
     },
     category_id: {
       type: DataTypes.INTEGER,
