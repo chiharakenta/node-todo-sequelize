@@ -41,7 +41,12 @@ app.get('/', (req, res) => {
   const options = {
     include: [{
       model: db.todo
-    }]
+    }],
+    order: [[
+      db.todo,
+      'updated_at',
+      'DESC'
+    ]]
   };
   db.category.findAll(options).then((results) => {
     res.render('index.ejs', { categories: results });
