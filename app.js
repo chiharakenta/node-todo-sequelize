@@ -80,24 +80,24 @@ app.put('/update/:id', (req, res) => {
   const params = {
     content: req.body.todoContent
   };
-  const filter = {
+  const options = {
     where: {
       id: req.params.id
     }
   };
-  db.todo.update(params, filter).then((results) => {
+  db.todo.update(params, options).then((results) => {
     res.redirect('/');
   });
 });
 
 /* 削除 */
 app.delete('/delete/:id', (req, res) => {
-  const filter = {
+  const options = {
     where: {
       id: req.params.id
     }
   };
-  db.todo.destroy(filter).then((results) => {
+  db.todo.destroy(options).then((results) => {
     res.redirect('/');
   });
 });
