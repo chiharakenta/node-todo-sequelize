@@ -37,52 +37,52 @@ const db = require('./models/index');
 
 
 /* 一覧表示 */
-app.get('/', (req, res) => {
-  db.todos.findAll({}).then((results) => {
+app.get('/', function(req, res) {
+  db.todos.findAll({}).then(function(results) {
     res.render('index.ejs', {todos: results} );
   });
 })
 
 /* 新規作成 */
-app.post('/create', (req, res) => {
-  const param = {
+app.post('/create', function(req, res) {
+  const params = {
     content: req.body.todoContent
   };
-  db.todos.create( param ).then((results) => {
+  db.todos.create( params ).then(function(results) {
     res.redirect('/');
   });
 })
 
 /* 編集 */
-app.get('/edit/:id', (req, res) => {
-  db.todos.findByPk(req.params.id).then((results) => {
+app.get('/edit/:id', function(req, res) {
+  db.todos.findByPk(req.paramss.id).then(function(results) {
     res.render('edit.ejs', {todo: results} );
   });
 });
 
 /* 更新 */
-app.put('/update/:id', (req, res) => {
-  const param = {
+app.put('/update/:id', function(req, res) {
+  const params = {
     content: req.body.todoContent
   };
-  const filter = {
+  const options = {
     where: {
-      id: req.params.id
+      id: req.paramss.id
     }
   };
-  db.todos.update(param, filter).then((results) => {
+  db.todos.update(params, options).then(function(results) {
     res.redirect('/');
   });
 });
 
 /* 削除 */
-app.delete('/delete/:id', (req, res) => {
-  const filter = {
+app.delete('/delete/:id', function(req, res) {
+  const options = {
     where: {
-      id: req.params.id
+      id: req.paramss.id
     }
   };
-  db.todos.destroy(filter).then((results) => {
+  db.todos.destroy(options).then(function(results) {
     res.redirect('/');
   });
 });
