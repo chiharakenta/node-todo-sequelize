@@ -37,7 +37,7 @@ const db = require('./models/index');
 
 
 /* 一覧表示 */
-app.get('/', (req, res) => {
+app.get('/', function(req, res) {
   const options = {
     include: [{
       model: db.todo
@@ -48,35 +48,35 @@ app.get('/', (req, res) => {
       'DESC'
     ]]
   };
-  db.category.findAll(options).then((results) => {
+  db.category.findAll(options).then(function(results) {
     res.render('index.ejs', { categories: results });
   });
 })
 
 /* 新規作成 */
-app.post('/create', (req, res) => {
+app.post('/create', function(req, res) {
   const params = {
     category_id: req.body.categoryId,
     content: req.body.todoContent
   };
   db.todo.create(params)
-    .then((results) => {
+    .then(function(results) {
       res.redirect('/');
     })
-    .catch((error) => {
+    .catch(function(error) {
       console.error(error.errors[0].message);
     })
 })
 
 /* 編集 */
-app.get('/edit/:id', (req, res) => {
-  db.todo.findByPk(req.params.id).then((results) => {
+app.get('/edit/:id', function(req, res) {
+  db.todo.findByPk(req.params.id).then(function(results) {
     res.render('edit.ejs', { todo: results });
   });
 });
 
 /* 更新 */
-app.put('/update/:id', (req, res) => {
+app.put('/update/:id', function(req, res) {
   const params = {
     content: req.body.todoContent
   };
@@ -85,51 +85,51 @@ app.put('/update/:id', (req, res) => {
       id: req.paramss.id
     }
   };
-  db.todo.update(params, options).then((results) => {
+  db.todo.update(params, options).then(function(results) {
     res.redirect('/');
   });
 });
 
 /* 削除 */
-app.delete('/delete/:id', (req, res) => {
+app.delete('/delete/:id', function(req, res) {
   const options = {
     where: {
       id: req.paramss.id
     }
   };
-  db.todo.destroy(options).then((results) => {
+  db.todo.destroy(options).then(function(results) {
     res.redirect('/');
   });
 });
 
-app.get('/categories', (req, res) => {
+app.get('/categories', function(req, res) {
   const options = {
     include: [{
       model: db.todo
     }]
   };
-  db.category.findAll(options).then((results) => {
+  db.category.findAll(options).then(function(results) {
     console.log(results);
     res.render('categories/index.ejs', { categories: results });
   });
 });
 
-app.post('/categories', (req, res) => {
+app.post('/categories', function(req, res) {
   const params = {
     name: req.body.categoryName
   };
-  db.category.create(params).then((results) => {
+  db.category.create(params).then(function(results) {
     res.redirect('/categories');
   });
 });
 
-app.get('/categories/:id/edit', (req, res) => {
-  db.category.findByPk(req.params.id).then((results) => {
+app.get('/categories/:id/edit', function(req, res) {
+  db.category.findByPk(req.params.id).then(function(results) {
     res.render('categories/edit.ejs', { category: results });
   });
 });
 
-app.put('/categories/:id', (req, res) => {
+app.put('/categories/:id', function(req, res) {
   const params = {
     name: req.body.categoryName
   };
@@ -138,18 +138,18 @@ app.put('/categories/:id', (req, res) => {
       id: req.params.id
     }
   }
-  db.category.update(params, filter).then((results) => {
+  db.category.update(params, filter).then(function(results) {
     res.redirect('/categories')
   });
 })
 
-app.delete('/categories/:id', (req, res) => {
+app.delete('/categories/:id', function(req, res) {
   const filter = {
     where: {
       id: req.params.id
     }
   };
-  db.category.destroy(filter).then((results) => {
+  db.category.destroy(filter).then(function(results) {
     res.redirect('/categories');
   });
 });
