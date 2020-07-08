@@ -54,21 +54,6 @@ app.get('/', (req, res) => {
 })
 
 /* 新規作成 */
-<<<<<<< HEAD
-app.post('/create', function(req, res) {
-  const params = {
-    content: req.body.todoContent
-  };
-  db.todos.create( params ).then(function(results) {
-    res.redirect('/');
-  });
-})
-
-/* 編集 */
-app.get('/edit/:id', function(req, res) {
-  db.todos.findByPk(req.paramss.id).then(function(results) {
-    res.render('edit.ejs', {todo: results} );
-=======
 app.post('/create', (req, res) => {
   const params = {
     category_id: req.body.categoryId,
@@ -87,16 +72,11 @@ app.post('/create', (req, res) => {
 app.get('/edit/:id', (req, res) => {
   db.todo.findByPk(req.params.id).then((results) => {
     res.render('edit.ejs', { todo: results });
->>>>>>> ac0edd4477cec060a6f43188a148309c715ff326
   });
 });
 
 /* 更新 */
-<<<<<<< HEAD
-app.put('/update/:id', function(req, res) {
-=======
 app.put('/update/:id', (req, res) => {
->>>>>>> ac0edd4477cec060a6f43188a148309c715ff326
   const params = {
     content: req.body.todoContent
   };
@@ -105,31 +85,19 @@ app.put('/update/:id', (req, res) => {
       id: req.paramss.id
     }
   };
-<<<<<<< HEAD
-  db.todos.update(params, options).then(function(results) {
-=======
   db.todo.update(params, options).then((results) => {
->>>>>>> ac0edd4477cec060a6f43188a148309c715ff326
     res.redirect('/');
   });
 });
 
 /* 削除 */
-<<<<<<< HEAD
-app.delete('/delete/:id', function(req, res) {
-=======
 app.delete('/delete/:id', (req, res) => {
->>>>>>> ac0edd4477cec060a6f43188a148309c715ff326
   const options = {
     where: {
       id: req.paramss.id
     }
   };
-<<<<<<< HEAD
-  db.todos.destroy(options).then(function(results) {
-=======
   db.todo.destroy(options).then((results) => {
->>>>>>> ac0edd4477cec060a6f43188a148309c715ff326
     res.redirect('/');
   });
 });
