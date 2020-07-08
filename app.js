@@ -35,9 +35,13 @@ app.use(methodOverride(function (req, res) {
 // sequelizeで定義したデータベースの読み込み
 const db = require('./models/index');
 
+app.get('/', function(req, res) {
+  res.redirect('/todos');
+});
+
 
 /* 一覧表示 */
-app.get('/', function(req, res) {
+app.get('/todos', function(req, res) {
   const options = {
     include: [{
       model: db.todo
@@ -49,12 +53,12 @@ app.get('/', function(req, res) {
     ]]
   };
   db.category.findAll(options).then(function(results) {
-    res.render('index.ejs', { categories: results });
+    res.render('todos/index.ejs', { categories: results });
   });
 })
 
 /* 新規作成 */
-app.post('/create', function(req, res) {
+app.post('/todos', function(req, res) {
   const params = {
     category_id: req.body.categoryId,
     content: req.body.todoContent
@@ -69,20 +73,20 @@ app.post('/create', function(req, res) {
 })
 
 /* 編集 */
-app.get('/edit/:id', function(req, res) {
+app.get('/todos/:id/edit', function(req, res) {
   db.todo.findByPk(req.params.id).then(function(results) {
-    res.render('edit.ejs', { todo: results });
+    res.render('todos/edit.ejs', { todo: results });
   });
 });
 
 /* 更新 */
-app.put('/update/:id', function(req, res) {
+app.put('/todos/:id', function(req, res) {
   const params = {
     content: req.body.todoContent
   };
   const options = {
     where: {
-      id: req.paramss.id
+      id: req.params.id
     }
   };
   db.todo.update(params, options).then(function(results) {
@@ -91,10 +95,10 @@ app.put('/update/:id', function(req, res) {
 });
 
 /* 削除 */
-app.delete('/delete/:id', function(req, res) {
+app.delete('/todos/:id', function(req, res) {
   const options = {
     where: {
-      id: req.paramss.id
+      id: req.params.id
     }
   };
   db.todo.destroy(options).then(function(results) {
