@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todoリスト</title>
-</head>
-
-<body>
+<%- include('../partials/header') %>
     <h1>カテゴリー管理</h1>
     <form action="/categories" method="post">
         <input type="text" name="categoryName">
@@ -24,6 +15,4 @@
         </form>
         <% }) %>
     </ul>
-</body>
-
-</html>
+<%- include('../partials/footer') %>
