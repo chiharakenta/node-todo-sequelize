@@ -32,131 +32,15 @@ app.use(methodOverride(function (req, res) {
     return method
   }
 }));
-// sequelizeで定義したデータベースの読み込み
-const db = require('./models/index');
 
 app.get('/', function(req, res) {
   res.redirect('/todos');
 });
 
-
-/* 一覧表示 */
-app.get('/todos', function(req, res) {
-  const options = {
-    include: [{
-      model: db.todo
-    }],
-    order: [[
-      db.todo,
-      'updated_at',
-      'DESC'
-    ]]
-  };
-  db.category.findAll(options).then(function(results) {
-    res.render('todos/index.ejs', { categories: results });
-  });
-})
-
-/* 新規作成 */
-app.post('/todos', function(req, res) {
-  const params = {
-    category_id: req.body.categoryId,
-    content: req.body.todoContent
-  };
-  db.todo.create(params)
-    .then(function(results) {
-      res.redirect('/');
-    })
-    .catch(function(error) {
-      console.error(error.errors[0].message);
-    })
-})
-
-/* 編集 */
-app.get('/todos/:id/edit', function(req, res) {
-  db.todo.findByPk(req.params.id).then(function(results) {
-    res.render('todos/edit.ejs', { todo: results });
-  });
-});
-
-/* 更新 */
-app.put('/todos/:id', function(req, res) {
-  const params = {
-    content: req.body.todoContent
-  };
-  const options = {
-    where: {
-      id: req.params.id
-    }
-  };
-  db.todo.update(params, options).then(function(results) {
-    res.redirect('/');
-  });
-});
-
-/* 削除 */
-app.delete('/todos/:id', function(req, res) {
-  const options = {
-    where: {
-      id: req.params.id
-    }
-  };
-  db.todo.destroy(options).then(function(results) {
-    res.redirect('/');
-  });
-});
-
-app.get('/categories', function(req, res) {
-  const options = {
-    include: [{
-      model: db.todo
-    }]
-  };
-  db.category.findAll(options).then(function(results) {
-    console.log(results);
-    res.render('categories/index.ejs', { categories: results });
-  });
-});
-
-app.post('/categories', function(req, res) {
-  const params = {
-    name: req.body.categoryName
-  };
-  db.category.create(params).then(function(results) {
-    res.redirect('/categories');
-  });
-});
-
-app.get('/categories/:id/edit', function(req, res) {
-  db.category.findByPk(req.params.id).then(function(results) {
-    res.render('categories/edit.ejs', { category: results });
-  });
-});
-
-app.put('/categories/:id', function(req, res) {
-  const params = {
-    name: req.body.categoryName
-  };
-  const filter = {
-    where: {
-      id: req.params.id
-    }
-  }
-  db.category.update(params, filter).then(function(results) {
-    res.redirect('/categories')
-  });
-})
-
-app.delete('/categories/:id', function(req, res) {
-  const filter = {
-    where: {
-      id: req.params.id
-    }
-  };
-  db.category.destroy(filter).then(function(results) {
-    res.redirect('/categories');
-  });
-});
+const todosRouter = require('./routes/todos');
+const categoriesRouter = require('./routes/categories');
+app.use('/todos', todosRouter);
+app.use('/categories', categoriesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
