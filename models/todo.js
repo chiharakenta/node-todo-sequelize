@@ -1,24 +1,13 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const todo = sequelize.define('todo', {
-    content: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: 'タスクを記入してください'
-        }
-      }
-    },
-    category_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    }
+    content: DataTypes.STRING,
+    category_id: DataTypes.INTEGER
   }, {
     underscored: true,
   });
   todo.associate = function(models) {
-    todo.belongsTo(models.category, {as: 'category'});
+    todo.belongsTo(models.category);
   };
   return todo;
 };
