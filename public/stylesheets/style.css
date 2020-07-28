@@ -33,12 +33,35 @@ ul {
   margin-right: auto;
 }
 
-.todo-list {
+.todo {
   width: 90%;
   padding: 16px 16px 32px;
   margin-top: 16px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.todo-title {
+  margin-bottom: 32px;
+}
+
+.todo-category {
+  margin-bottom: 6px;
+}
+
+.todo-category {
+  border-bottom: 1px solid #dee2e6;
+  margin-bottom: 0;
+  padding-bottom: 6px;
+}
+
+.todo-category:not(:first-of-type) {
+  margin-top: 24px;
+}
+
+.todo-list {
+  margin: 0;
+  padding-left: 1em;
 }
 
 .todo-item {

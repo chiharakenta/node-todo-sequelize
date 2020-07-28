@@ -16,11 +16,11 @@
     <a href="/categories">カテゴリー管理</a>
   </div>
 
-  <div class="todo-list">
-    <h2>Todo一覧</h2>
+  <div class="todo">
+    <h2 class="todo-title">Todo一覧</h2>
       <% categories.map(function(category) { %>
-        <h3><%= category.name %></h3>
-        <ul>
+        <h3 class="todo-category"><%= category.name %></h3>
+        <ul class="todo-list">
           <% category.todos.map(function(todo) { %>
             <li class="todo-item">
               <p><%= todo.content %></p>
