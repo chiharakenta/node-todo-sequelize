@@ -1,9 +1,10 @@
-# セットアップ手順
+# How to Setup
 ```
-$ git clone https://github.com/gs-create/node-todo-sequelize.git
+$ git clone https://github.com/dotval/node-todo-sequelize.git
 $ cd node-todo-sequelize
 $ npm install
-$ npx sequelize db:create
-$ npx sequelize db:migrate
+$ npx sequelize-cli db:create
+$ npx sequelize-cli db:migrate
+$ npx sequelize-cli db:seed:all
 $ npm start
 ```
